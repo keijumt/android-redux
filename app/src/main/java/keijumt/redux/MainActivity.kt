@@ -5,24 +5,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import keijumt.redux.databinding.ActivityMainBinding
-import keijumt.redux.redux.Reducer
 import keijumt.redux.redux.Store
 import keijumt.redux.redux.actioncreator.RepoActionCreator
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        val binding =
+            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         val repoAdapter = RepoAdapter(this)
         binding.recyclerRepo.adapter = repoAdapter
 
-        // TODO DI
-        val store = Store(Reducer())
-        val repoActionCreator = RepoActionCreator()
+        val store: Store by inject()
+        val repoActionCreator: RepoActionCreator by inject()
+
+        repoActionCreator.loadRepo()
 
         lifecycleScope.launch {
             store.subscribe().collect {
