@@ -1,9 +1,11 @@
 package keijumt.redux.data.mapper
 
 import keijumt.redux.data.response.OwnerResponse
+import keijumt.redux.data.response.RepoDetailResponse
 import keijumt.redux.data.response.RepoResponse
 import keijumt.redux.model.Owner
 import keijumt.redux.model.Repo
+import keijumt.redux.model.RepoDetail
 
 fun List<RepoResponse>.toRepos(): List<Repo> {
     return map {
@@ -16,6 +18,17 @@ fun List<RepoResponse>.toRepos(): List<Repo> {
             stars = it.stars
         )
     }
+}
+
+fun RepoDetailResponse.toRepoDetail(): RepoDetail {
+    return RepoDetail(
+        id = id,
+        name = name,
+        fullName = fullName,
+        description = description,
+        owner = owner.toOwner(),
+        stars = stars
+    )
 }
 
 private fun OwnerResponse.toOwner(): Owner {
