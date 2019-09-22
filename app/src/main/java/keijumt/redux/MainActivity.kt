@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
         val store: Store by inject()
         val repoActionCreator: RepoActionCreator by inject()
 
-        repoActionCreator.loadRepo()
-
         lifecycleScope.launch {
             store.subscribe().collect {
                 repoAdapter.submitList(it.repos)
