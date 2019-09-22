@@ -9,5 +9,5 @@ interface AsyncAction : Action {
 }
 
 sealed class AppAction : Action {
-    data class RefreshRepos(val repos: List<Repo>) : AppAction()
+    data class SearchRepos(val repos: List<Repo>) : AppAction()
 }

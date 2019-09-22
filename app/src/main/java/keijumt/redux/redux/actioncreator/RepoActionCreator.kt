@@ -1,21 +1,20 @@
 package keijumt.redux.redux.actioncreator
 
-import keijumt.redux.model.Repo
+import keijumt.redux.data.repository.RepoRepository
 import keijumt.redux.redux.Action
 import keijumt.redux.redux.AppAction
 import keijumt.redux.redux.AsyncAction
-import kotlin.random.Random
 
-// TODO di repository
-class RepoActionCreator {
-    fun loadRepo() = object : AsyncAction {
+class RepoActionCreator(
+    private val repoRepository: RepoRepository
+) {
+    fun searchRepo(q: String) = object : AsyncAction {
         override suspend fun execute(): Action {
-            return AppAction.RefreshRepos(repos = (0 until 30).map {
-                Repo(
-                    id = it.toLong(),
-                    name = "Repository ${Random.nextInt(100)}"
-                )
-            })
+            return try {
+                AppAction.SearchRepos(repoRepository.searchByRepoName(q))
+            } catch (e: Exception) {
+                AppAction.SearchRepos(emptyList())
+            }
         }
     }
 }

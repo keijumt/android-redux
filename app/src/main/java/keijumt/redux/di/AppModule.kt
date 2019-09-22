@@ -10,5 +10,5 @@ val appModule = module {
     single { Reducer() }
     single { AsyncMiddleware() }
     single { Store(get(), get()) }
-    single { RepoActionCreator() }
+    single { RepoActionCreator(get()) }
 }

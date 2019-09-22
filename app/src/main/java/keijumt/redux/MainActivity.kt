@@ -30,6 +30,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        store.dispatch(repoActionCreator.loadRepo())
+        store.dispatch(repoActionCreator.searchRepo("kotlin"))
     }
 }

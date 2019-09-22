@@ -1,6 +1,10 @@
 package keijumt.redux.model
 
 data class Repo(
-    val id: Long,
-    val name: String
+    val id: Int,
+    val name: String,
+    val fullName: String,
+    val description: String?,
+    val owner: Owner,
+    val stars: Int
 )
