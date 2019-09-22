@@ -1,9 +1,20 @@
 package keijumt.redux.redux
 
 class Reducer {
-    fun reduce(state: State, action: Action): State {
+    fun reduce(state: AppState, action: Action): AppState {
         return when (action) {
-            is AppAction.SearchRepos -> state.copy(repos = action.repos)
+            is AppAction.SearchReposAction.SearchLoading -> {
+                state.copy(
+                    searchRepoState = state.searchRepoState.copy(
+                        isLoading = action.isLoading
+                    )
+                )
+            }
+            is AppAction.SearchReposAction.SearchRepos -> state.copy(
+                searchRepoState = state.searchRepoState.copy(
+                    repos = action.repos
+                )
+            )
             else -> throw IllegalArgumentException("unknown action $action")
         }
     }

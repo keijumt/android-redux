@@ -5,9 +5,12 @@ import keijumt.redux.model.Repo
 interface Action
 
 interface AsyncAction : Action {
-    suspend fun execute(): Action
+    suspend fun execute(dispatcher: Dispatcher): Action
 }
 
 sealed class AppAction : Action {
-    data class SearchRepos(val repos: List<Repo>) : AppAction()
+    sealed class SearchReposAction : AppAction() {
+        data class SearchLoading(val isLoading: Boolean) : SearchReposAction()
+        data class SearchRepos(val repos: List<Repo>) : SearchReposAction()
+    }
 }

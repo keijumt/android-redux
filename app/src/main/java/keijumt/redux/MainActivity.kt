@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             store.subscribe().collect {
-                repoAdapter.submitList(it.repos)
+                binding.isLoading = it.searchRepoState.isLoading
+                repoAdapter.submitList(it.searchRepoState.repos)
             }
         }
 
