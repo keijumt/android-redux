@@ -1,1 +1,1 @@
-# training-android-redux
+# android-redux
