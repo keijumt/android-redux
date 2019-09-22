@@ -8,6 +8,7 @@ import keijumt.redux.databinding.ActivityMainBinding
 import keijumt.redux.redux.Store
 import keijumt.redux.redux.actioncreator.RepoActionCreator
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -25,10 +26,19 @@ class MainActivity : AppCompatActivity() {
         val repoActionCreator: RepoActionCreator by inject()
 
         lifecycleScope.launch {
-            store.subscribe().collect {
-                binding.isLoading = it.searchRepoState.isLoading
-                repoAdapter.submitList(it.searchRepoState.repos)
-            }
+            store.subscribe()
+                .distinctUntilChanged { old, new -> old.searchRepoState.isLoading == new.searchRepoState.isLoading }
+                .collect {
+                    binding.isLoading = it.searchRepoState.isLoading
+                }
+        }
+
+        lifecycleScope.launch {
+            store.subscribe()
+                .distinctUntilChanged { old, new -> old.searchRepoState.repos == new.searchRepoState.repos }
+                .collect {
+                    repoAdapter.submitList(it.searchRepoState.repos)
+                }
         }
 
         store.dispatch(repoActionCreator.searchRepo("kotlin"))
