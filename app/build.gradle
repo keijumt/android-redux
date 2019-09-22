@@ -31,6 +31,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -61,4 +62,15 @@ dependencies {
     def okhttp_version = '4.1.0'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    // Mockk
+    testImplementation 'io.mockk:mockk:1.9.3'
+
+    // Truth
+    testImplementation 'com.google.truth:truth:1.0'
+
+    // Spek
+    testImplementation 'org.spekframework.spek2:spek-dsl-jvm:2.0.6'
+    testImplementation 'org.spekframework.spek2:spek-runner-junit5:2.0.6'
+
 }
